@@ -62,7 +62,7 @@ export default function Home() {
               Your browser does not support embedded video. Use the download button instead.
             </video>
           </div>
-          <div className="video-caption"><span className="signal-dot" /> Watch first, then read what to do next.</div>
+          <div className="video-caption video-caption-actions"><span className="signal-dot" /> Watch first, then read what to do next.<a className="video-download" href={videoUrl} download="blue-whale-awareness-video.mp4"><Download size={14} /> Download awareness video</a></div>
         </div>
       </section>
 
