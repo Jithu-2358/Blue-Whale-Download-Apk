@@ -1,3 +1,3 @@
-# Anime redesign checklist
+# Title update checklist
 
-The anime-themed video-only redesign is complete. The supplied video is the main content, the page uses a midnight ocean anime treatment, and the only download offered is the supplied video itself. The page does not distribute a Blue Whale APK.
+The anime-themed website will use “Blue Whale Game” as its visible title and document title. The supplied video remains the only downloadable asset; no APK link will be added.
