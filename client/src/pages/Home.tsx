@@ -30,7 +30,7 @@ export default function Home() {
             </video>
             <div className="video-play-badge"><Play size={17} fill="currentColor" /></div>
           </div>
-          <div className="video-underbar"><span className="wave-mark">〰</span><span>Watch the supplied video</span><a href={videoUrl} download="blue-tide-video.mp4"><Download size={15} /> DOWNLOAD VIDEO</a></div>
+          <div className="video-underbar"><span className="wave-mark">〰</span><span>Watch the supplied video</span><a href={videoUrl} download="blue-tide-video.mp4"><Download size={15} /> DOWNLOAD BLUE WHALE</a></div>
         </div>
       </section>
 
