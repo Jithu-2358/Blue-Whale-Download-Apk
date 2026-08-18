@@ -39,7 +39,7 @@ export default function Home() {
     setIntroVisible(true);
     setIntroKey((value) => value + 1);
     if (introTimer.current) window.clearTimeout(introTimer.current);
-    introTimer.current = window.setTimeout(() => setIntroVisible(false), reducedMotion.current ? 0 : introDuration);
+    introTimer.current = window.setTimeout(() => setIntroVisible(false), reducedMotion.current ? 1500 : introDuration);
     restartAnimation(introRef.current);
     const video = introVideoRef.current;
     if (video) {
@@ -51,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     replayIntro();
     const onPageShow = () => replayIntro();
-    const onVisibility = () => replayIntro();
+    const onVisibility = () => { if (document.visibilityState === "visible") replayIntro(); };
     const onFocus = () => replayIntro();
     window.addEventListener("pageshow", onPageShow);
     document.addEventListener("visibilitychange", onVisibility);
