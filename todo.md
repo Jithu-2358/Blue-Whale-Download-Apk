@@ -1,3 +1,3 @@
-# Intro visibility debug checklist
+# Intro simplification
 
-Fixed the root cause: reduced-motion CSS no longer hides the intro, visibilitychange replays only when the page becomes visible, and reduced-motion users get a visible static intro for 1.5 seconds. The project was built and the intro screenshot visibly shows the title and anime video.
+Removed the added ocean orb, grid, curved lines, progress line, poster-like background effects, and intro label. The opening now contains only the supplied video, Blue Whale title, simple dark background, and Skip Intro control. Video playback and replay behavior remain intact; the project was built and visually verified.
