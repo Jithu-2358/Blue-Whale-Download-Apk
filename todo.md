@@ -1,3 +1,3 @@
-# Intro visibility debug checklist
+# Reference-matched redesign
 
-Fixed the root cause: reduced-motion CSS no longer hides the intro, visibilitychange replays only when the page becomes visible, and reduced-motion users get a visible static intro for 1.5 seconds. The project was built and the intro screenshot visibly shows the title and anime video.
+Rebuilt the opening and main page to match the supplied mobile reference. The intro now uses the tall orb, label, Blue Whale title, supplied video, curved frame, Skip Intro, and progress line. The main page now uses the reference header, hamburger menu, episode hero, coral Download Blue Whale CTA, Explore link, and rounded supplied-video player. The project was built and verified in both intro and revealed mobile states.

@@ -1,50 +1,24 @@
-// Blue Arc style: blue curved anime-ocean composition, cinematic intro, soft motion, and video-only download CTA.
+// Reference-match style: tall mobile Blue Whale intro, cobalt video-room landing page, supplied video only.
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowRight, Download, Menu, Play, Sparkles, Waves, X } from "lucide-react";
+import { ArrowDownToLine, ArrowRight, Menu, Play, Waves, X } from "lucide-react";
 
-const videoUrl = "/manus-storage/blue-whale-awareness-video_bbfc80d6.mp4";
+const videoUrl = "/manus-storage/blue-whale-reference_abe0dc24.mp4";
 const introDuration = 8000;
-
-const cards = [
-  { number: "01", title: "Ocean Signal", copy: "A cinematic opening built around the supplied video and a midnight-blue current." },
-  { number: "02", title: "Anime Current", copy: "Curved frames, cel-shaded accents, and bright tide marks shape every section." },
-  { number: "03", title: "Video Archive", copy: "The supplied video stays at the center, with a clear download action beneath it." },
-];
-
-const archiveRows = [
-  ["FORMAT", "MP4 video"],
-  ["DURATION", "00:09"],
-  ["MOOD", "Ocean night"],
-  ["ACTION", "Watch or download"],
-];
-
-function restartAnimation(node: HTMLElement | null) {
-  if (!node) return;
-  node.classList.remove("intro-restart");
-  void node.offsetWidth;
-  node.classList.add("intro-restart");
-}
 
 export default function Home() {
   const [introVisible, setIntroVisible] = useState(true);
-  const [introKey, setIntroKey] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const introRef = useRef<HTMLDivElement>(null);
   const introVideoRef = useRef<HTMLVideoElement>(null);
-  const reducedMotion = useRef(false);
-  const introTimer = useRef<number | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const replayIntro = useCallback(() => {
-    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setIntroVisible(true);
-    setIntroKey((value) => value + 1);
-    if (introTimer.current) window.clearTimeout(introTimer.current);
-    introTimer.current = window.setTimeout(() => setIntroVisible(false), reducedMotion.current ? 1500 : introDuration);
-    restartAnimation(introRef.current);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setIntroVisible(false), introDuration);
     const video = introVideoRef.current;
     if (video) {
       video.currentTime = 0;
-      if (!reducedMotion.current) void video.play().catch(() => undefined);
+      void video.play().catch(() => undefined);
     }
   }, []);
 
@@ -57,7 +31,7 @@ export default function Home() {
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("focus", onFocus);
     return () => {
-      if (introTimer.current) window.clearTimeout(introTimer.current);
+      if (timerRef.current) window.clearTimeout(timerRef.current);
       window.removeEventListener("pageshow", onPageShow);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("focus", onFocus);
@@ -70,25 +44,24 @@ export default function Home() {
   };
 
   return (
-    <div className="blue-arc-page">
-      <div ref={introRef} key={introKey} className={`intro-screen ${introVisible ? "intro-visible" : "intro-hidden"}`} aria-hidden={!introVisible}>
-        <div className="intro-grid" aria-hidden="true" /><div className="intro-moon" aria-hidden="true" /><div className="intro-wave intro-wave-one" aria-hidden="true" /><div className="intro-wave intro-wave-two" aria-hidden="true" />
-        <div className="intro-copy"><p className="intro-kicker"><Sparkles size={14} /> BLUE ARC STUDIO / OPENING</p><h1>Blue<br /><span>Whale</span></h1></div>
-        <div className="intro-video-orbit"><video ref={introVideoRef} autoPlay muted playsInline preload="auto" poster="/manus-storage/ocean-hero_81c956de.png" aria-label="Opening Blue Whale video" onLoadedData={(event) => { const video = event.currentTarget; if (!reducedMotion.current) void video.play().catch(() => undefined); }}><source src={videoUrl} type="video/mp4" /></video><div className="intro-scanline" /></div>
-        <button className="skip-button" onClick={skipIntro}>Skip Intro <ArrowRight size={15} /></button><div className="intro-progress" aria-hidden="true"><span /></div>
-      </div>
+    <div className="reference-site">
+      <section className={`reference-intro ${introVisible ? "is-visible" : "is-hidden"}`} aria-hidden={!introVisible}>
+        <div className="intro-lines" aria-hidden="true" />
+        <div className="intro-orb" aria-hidden="true" />
+        <p className="intro-label"><span className="intro-star">✧</span> BLUE ARC STUDIO / OPENING</p>
+        <h1 className="intro-title">BLUE<br /><span>WHALE</span></h1>
+        <div className="intro-video-frame"><video ref={introVideoRef} autoPlay muted playsInline preload="auto" poster="/manus-storage/ocean-hero_81c956de.png" aria-label="Blue Whale opening video"><source src={videoUrl} type="video/mp4" /></video></div>
+        <div className="intro-curves" aria-hidden="true" />
+        <button className="intro-skip" onClick={skipIntro}>Skip Intro <ArrowRight size={20} /></button>
+        <div className="intro-progress" aria-hidden="true"><span /></div>
+      </section>
 
-      <header className="arc-header"><a className="arc-logo" href="#home"><span className="arc-logo-mark"><Waves size={20} /></span><span><strong>BLUE WHALE GAME</strong><small>ANIME VIDEO ROOM</small></span></a><nav className={menuOpen ? "arc-nav nav-open" : "arc-nav"}><a href="#home" onClick={() => setMenuOpen(false)}>Home</a><a href="#chapters" onClick={() => setMenuOpen(false)}>Chapters</a><a href="#archive" onClick={() => setMenuOpen(false)}>Archive</a><a className="nav-download" href={videoUrl} download="blue-whale-video.mp4" onClick={() => setMenuOpen(false)}><Download size={14} /> Download Blue Whale</a></nav><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></header>
+      <header className="reference-header"><a href="#home" className="reference-brand"><span className="brand-mark"><Waves size={28} /></span><span><strong>BLUE WHALE GAME</strong><small>ANIME VIDEO ROOM</small></span></a><button className="reference-menu" onClick={() => setMenuOpen((open) => !open)} aria-label="Open menu">{menuOpen ? <X size={36} /> : <Menu size={36} />}</button><nav className={menuOpen ? "reference-nav open" : "reference-nav"}><a href="#home" onClick={() => setMenuOpen(false)}>Home</a><a href="#video" onClick={() => setMenuOpen(false)}>Video</a><a href={videoUrl} download="blue-whale.mp4" onClick={() => setMenuOpen(false)}>Download</a></nav></header>
 
-      <main>
-        <section id="home" className="arc-hero"><div className="hero-curve curve-a" aria-hidden="true" /><div className="hero-copy"><p className="section-kicker"><span /> EPISODE 01 / OCEAN SIGNAL</p><h2>Ride the<br /><em>blue current.</em></h2><p className="hero-description">A cinematic anime video room shaped by deep water, bright tide marks, and one unforgettable ocean frame.</p><div className="hero-buttons"><a className="arc-button arc-button-coral" href={videoUrl} download="blue-whale-video.mp4"><Download size={16} /> Download Blue Whale</a><a className="arc-text-link" href="#chapters"><Play size={15} fill="currentColor" /> Explore the page</a></div></div><div className="hero-video-card"><div className="card-topline"><span>NOW PLAYING</span><span>00:09</span></div><div className="hero-video-frame"><video controls playsInline preload="metadata" poster="/manus-storage/ocean-hero_81c956de.png" aria-label="Blue Whale video"><source src={videoUrl} type="video/mp4" /></video><div className="frame-tag">BLUE / 01</div></div><p className="video-caption">Supplied video · blue ocean archive</p></div></section>
-
-        <section id="chapters" className="arc-section chapter-section"><div className="section-heading"><p className="section-kicker"><span /> THE BLUE ARC</p><h2>Three ways<br /><em>into the tide.</em></h2></div><div className="arc-cards">{cards.map((card) => <article className="arc-card" key={card.number}><span className="card-number">{card.number}</span><div className="card-spark">✦</div><h3>{card.title}</h3><p>{card.copy}</p><a href="#archive" aria-label={`View ${card.title}`}>View signal <ArrowRight size={15} /></a></article>)}</div></section>
-
-        <section id="archive" className="arc-section archive-section"><div className="archive-intro"><p className="section-kicker"><span /> VIDEO ARCHIVE</p><h2>One frame.<br /><em>Full tide.</em></h2><p>The supplied video is ready to watch in the player above or download directly from the page.</p></div><div className="archive-table">{archiveRows.map(([label, value]) => <div className="archive-row" key={label}><span>{label}</span><strong>{value}</strong></div>)}<a className="arc-button arc-button-outline" href={videoUrl} download="blue-whale-video.mp4"><Download size={16} /> Download Blue Whale</a></div></section>
+      <main id="home">
+        <section className="reference-hero"><div className="reference-route" aria-hidden="true" /><p className="reference-kicker"><span /> EPISODE 01 / OCEAN SIGNAL</p><h2>Ride the<br /><em>blue current.</em></h2><p className="reference-description">A cinematic anime video room shaped by deep water, bright tide marks, and one unforgettable ocean frame.</p><div className="reference-actions"><a className="reference-download" href={videoUrl} download="blue-whale.mp4"><ArrowDownToLine size={21} /> Download Blue Whale</a><a className="reference-explore" href="#video"><Play size={20} fill="currentColor" /> Explore the page</a></div></section>
+        <section id="video" className="reference-player-section"><div className="player-meta"><span>NOW PLAYING</span><span>00:09</span></div><div className="reference-player"><video controls playsInline preload="metadata" poster="/manus-storage/ocean-hero_81c956de.png" aria-label="Blue Whale video"><source src={videoUrl} type="video/mp4" /></video><span className="player-tag">BLUE / 01</span></div><p className="player-caption">Supplied video · blue ocean archive</p></section>
       </main>
-
-      <footer className="arc-footer"><div className="arc-logo"><span className="arc-logo-mark"><Waves size={20} /></span><span><strong>BLUE WHALE GAME</strong><small>BLUE ARC STUDIO</small></span></div><p>© 2026 Blue Arc Studio. Keep the current moving.</p><a href="#home">Back to top ↑</a></footer>
     </div>
   );
 }
