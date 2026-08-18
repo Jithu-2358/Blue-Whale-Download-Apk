@@ -1,3 +1,3 @@
-# Intro fix checklist
+# Deterministic intro checklist
 
-Removed the sentence “An ocean signal in anime blue.”, removed the red line inside the video frame, removed the bottom red progress line and red wave, and added a poster plus media-ready playback fallback. The screenshot now shows a visible video frame instead of black. The project builds successfully.
+The intro now uses one mounted overlay, a single guarded timer, debounced replay handling, and a stable poster overlay above the video until playback is ready. Focus, visibility, and BFCache events no longer stack extra intros after completion. The project builds successfully and the opening screenshot shows one intended screen with a visible video frame.
