@@ -1,3 +1,3 @@
-# Reference-matched redesign
+# Intro and single-page implementation checklist
 
-Rebuilt the opening and main page to match the supplied mobile reference. The intro now uses the tall orb, label, Blue Whale title, supplied video, curved frame, Skip Intro, and progress line. The main page now uses the reference header, hamburger menu, episode hero, coral Download Blue Whale CTA, Explore link, and rounded supplied-video player. The project was built and verified in both intro and revealed mobile states.
+The blue curved anime-ocean intro and single-page site are complete. The opening uses the supplied video, includes Skip Intro and an eight-second auto-skip, replays on load/pageshow/visibility/focus, transitions smoothly, and respects reduced motion. The main site includes sticky navigation, hero CTA, three theme cards, archive rows, footer, responsive behavior, and the safe Download Blue Whale video control.
