@@ -1,3 +1,3 @@
-# Intro and single-page implementation checklist
+# Intro scanline adjustment
 
-The blue curved anime-ocean intro and single-page site are complete. The opening uses the supplied video, includes Skip Intro and an eight-second auto-skip, replays on load/pageshow/visibility/focus, transitions smoothly, and respects reduced motion. The main site includes sticky navigation, hero CTA, three theme cards, archive rows, footer, responsive behavior, and the safe Download Blue Whale video control.
+The red scanline overlay has been removed from the opening anime video. The intro video, skip control, timing, replay behavior, blue curved styling, and all main-site content remain intact. The project was type-checked, built, and visually verified.
