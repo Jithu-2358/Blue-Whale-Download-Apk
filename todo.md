@@ -1,3 +1,3 @@
-# Modification checklist
+# Intro subtitle adjustment
 
-All requested safe modifications are complete. The supplied video is the first opening element, the awareness-video download appears immediately below it, and the site explains why no Blue Whale APK is distributed while providing safer support guidance.
+Removed “An ocean signal in anime blue.” from the intro. The title, video, Skip Intro control, scanline-free styling, and replay behavior remain intact. The project was built and visually verified.

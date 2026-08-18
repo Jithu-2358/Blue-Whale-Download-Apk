@@ -1,106 +1,94 @@
-// Signal Coast style: video-first editorial layout, ink-blue/cream/teal palette, calm motion, and plainspoken safety language.
-import { ArrowDown, ArrowUpRight, Download, HeartHandshake, ShieldAlert } from "lucide-react";
+// Blue Arc style: blue curved anime-ocean composition, cinematic intro, soft motion, and video-only download CTA.
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight, Download, Menu, Play, Sparkles, Waves, X } from "lucide-react";
 
 const videoUrl = "/manus-storage/blue-whale-awareness-video_bbfc80d6.mp4";
+const introDuration = 8000;
 
-const signals = [
-  {
-    number: "01",
-    title: "Secrecy is a warning sign",
-    copy: "Requests to hide messages, tasks, or conversations from family and trusted adults can be a way to isolate someone.",
-  },
-  {
-    number: "02",
-    title: "Pressure is not proof",
-    copy: "Threats, dares, countdowns, and claims that you must prove yourself are manipulation—not a test of courage.",
-  },
-  {
-    number: "03",
-    title: "Connection changes the current",
-    copy: "Save evidence, stop replying, and involve a trusted person, school counselor, or local support service.",
-  },
+const cards = [
+  { number: "01", title: "Ocean Signal", copy: "A cinematic opening built around the supplied video and a midnight-blue current." },
+  { number: "02", title: "Anime Current", copy: "Curved frames, cel-shaded accents, and bright tide marks shape every section." },
+  { number: "03", title: "Video Archive", copy: "The supplied video stays at the center, with a clear download action beneath it." },
 ];
 
-function AppMark() {
-  return <div className="app-mark" aria-label="Signal Coast whale-tail shield mark"><img src="/manus-storage/whale-mark_41e9ee98.png" alt="" /></div>;
+const archiveRows = [
+  ["FORMAT", "MP4 video"],
+  ["DURATION", "00:09"],
+  ["MOOD", "Ocean night"],
+  ["ACTION", "Watch or download"],
+];
+
+function restartAnimation(node: HTMLElement | null) {
+  if (!node) return;
+  node.classList.remove("intro-restart");
+  void node.offsetWidth;
+  node.classList.add("intro-restart");
 }
 
 export default function Home() {
+  const [introVisible, setIntroVisible] = useState(true);
+  const [introKey, setIntroKey] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const introRef = useRef<HTMLDivElement>(null);
+  const introVideoRef = useRef<HTMLVideoElement>(null);
+  const reducedMotion = useRef(false);
+  const introTimer = useRef<number | null>(null);
+
+  const replayIntro = useCallback(() => {
+    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setIntroVisible(true);
+    setIntroKey((value) => value + 1);
+    if (introTimer.current) window.clearTimeout(introTimer.current);
+    introTimer.current = window.setTimeout(() => setIntroVisible(false), reducedMotion.current ? 0 : introDuration);
+    restartAnimation(introRef.current);
+    const video = introVideoRef.current;
+    if (video) {
+      video.currentTime = 0;
+      if (!reducedMotion.current) void video.play().catch(() => undefined);
+    }
+  }, []);
+
+  useEffect(() => {
+    replayIntro();
+    const onPageShow = () => replayIntro();
+    const onVisibility = () => replayIntro();
+    const onFocus = () => replayIntro();
+    window.addEventListener("pageshow", onPageShow);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("focus", onFocus);
+    return () => {
+      if (introTimer.current) window.clearTimeout(introTimer.current);
+      window.removeEventListener("pageshow", onPageShow);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("focus", onFocus);
+    };
+  }, [replayIntro]);
+
+  const skipIntro = () => {
+    setIntroVisible(false);
+    introVideoRef.current?.pause();
+  };
+
   return (
-    <main className="site-shell">
-      <header className="site-header">
-        <a href="#top" className="brand-lockup" aria-label="Signal Coast home">
-          <AppMark />
-          <span>
-            <strong>Signal Coast</strong>
-            <small>Digital safety notes</small>
-          </span>
-        </a>
-        <nav className="header-nav" aria-label="Page navigation">
-          <a href="#why-it-matters">Why it matters</a>
-          <a href="#what-to-do">What to do</a>
-          <a className="header-cta" href="#support">Find support <ArrowUpRight size={15} /></a>
-        </nav>
-      </header>
+    <div className="blue-arc-page">
+      <div ref={introRef} key={introKey} className={`intro-screen ${introVisible ? "intro-visible" : "intro-hidden"}`} aria-hidden={!introVisible}>
+        <div className="intro-grid" aria-hidden="true" /><div className="intro-moon" aria-hidden="true" /><div className="intro-wave intro-wave-one" aria-hidden="true" /><div className="intro-wave intro-wave-two" aria-hidden="true" />
+        <div className="intro-copy"><p className="intro-kicker"><Sparkles size={14} /> BLUE ARC STUDIO / OPENING</p><h1>Blue<br /><span>Whale</span></h1></div>
+        <div className="intro-video-orbit"><video ref={introVideoRef} autoPlay muted playsInline preload="auto" aria-label="Opening Blue Whale video"><source src={videoUrl} type="video/mp4" /></video><div className="intro-scanline" /></div>
+        <button className="skip-button" onClick={skipIntro}>Skip Intro <ArrowRight size={15} /></button><div className="intro-progress" aria-hidden="true"><span /></div>
+      </div>
 
-      <section id="top" className="video-landing">
-        <div className="landing-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> A public-interest guide</p>
-          <h1>Keep the video.<br /><em>Skip the challenge.</em></h1>
-          <p className="landing-deck">A calm, clear explanation of why the so-called Blue Whale challenge is dangerous—and how to help someone step away from online pressure.</p>
-          <div className="landing-actions">
-            <a className="button button-primary" href={videoUrl} download="blue-whale-awareness-video.mp4"><Download size={17} /> Download this video</a>
-            <a className="text-link" href="#why-it-matters">Read the safety notes <ArrowDown size={16} /></a>
-          </div>
-          <p className="meta-note">The download is the supplied awareness video only. This site does not distribute any game or challenge.</p>
-        </div>
-        <div className="video-frame-wrap">
-          <div className="video-meta"><span><i className="route-marker" /> PUBLIC-SERVICE EVIDENCE</span><span>ROUTE 01 / 04</span></div>
-          <div className="video-frame">
-            <video controls playsInline preload="metadata" aria-label="Supplied Blue Whale awareness video">
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support embedded video. Use the download button instead.
-            </video>
-          </div>
-          <div className="video-caption video-caption-actions"><span className="signal-dot" /> Watch first, then read what to do next.<a className="video-download" href={videoUrl} download="blue-whale-awareness-video.mp4"><Download size={14} /> Download awareness video</a></div>
-        </div>
-      </section>
+      <header className="arc-header"><a className="arc-logo" href="#home"><span className="arc-logo-mark"><Waves size={20} /></span><span><strong>BLUE WHALE GAME</strong><small>ANIME VIDEO ROOM</small></span></a><nav className={menuOpen ? "arc-nav nav-open" : "arc-nav"}><a href="#home" onClick={() => setMenuOpen(false)}>Home</a><a href="#chapters" onClick={() => setMenuOpen(false)}>Chapters</a><a href="#archive" onClick={() => setMenuOpen(false)}>Archive</a><a className="nav-download" href={videoUrl} download="blue-whale-video.mp4" onClick={() => setMenuOpen(false)}><Download size={14} /> Download Blue Whale</a></nav><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></header>
 
-      <div className="current-line" aria-hidden="true"><span /><span /><span /></div>
+      <main>
+        <section id="home" className="arc-hero"><div className="hero-curve curve-a" aria-hidden="true" /><div className="hero-copy"><p className="section-kicker"><span /> EPISODE 01 / OCEAN SIGNAL</p><h2>Ride the<br /><em>blue current.</em></h2><p className="hero-description">A cinematic anime video room shaped by deep water, bright tide marks, and one unforgettable ocean frame.</p><div className="hero-buttons"><a className="arc-button arc-button-coral" href={videoUrl} download="blue-whale-video.mp4"><Download size={16} /> Download Blue Whale</a><a className="arc-text-link" href="#chapters"><Play size={15} fill="currentColor" /> Explore the page</a></div></div><div className="hero-video-card"><div className="card-topline"><span>NOW PLAYING</span><span>00:09</span></div><div className="hero-video-frame"><video controls playsInline preload="metadata" aria-label="Blue Whale video"><source src={videoUrl} type="video/mp4" /></video><div className="frame-tag">BLUE / 01</div></div><p className="video-caption">Supplied video · blue ocean archive</p></div></section>
 
-      <section id="why-it-matters" className="editorial-section split-section">
-        <div className="section-intro">
-          <p className="eyebrow">01 / The context</p>
-          <h2>What people call the “Blue Whale challenge” is not a safe game.</h2>
-          <p className="body-lede">The name has been used online for coercive, harmful, and sometimes fabricated stories. Regardless of the label, a message that pressures someone into secrecy, fear, or self-harm should be treated as a serious safety issue.</p>
-        </div>
-        <aside className="signal-card">
-          <div className="card-icon"><ShieldAlert size={21} /></div>
-          <p className="card-kicker">THE DOWNSIDE</p>
-          <h3>It can isolate, frighten, and manipulate.</h3>
-          <p>Engaging with threatening accounts can increase anxiety, disrupt sleep, damage trust, and make it harder to ask for help. No online “challenge” is worth risking a person’s safety.</p>
-        </aside>
-      </section>
+        <section id="chapters" className="arc-section chapter-section"><div className="section-heading"><p className="section-kicker"><span /> THE BLUE ARC</p><h2>Three ways<br /><em>into the tide.</em></h2></div><div className="arc-cards">{cards.map((card) => <article className="arc-card" key={card.number}><span className="card-number">{card.number}</span><div className="card-spark">✦</div><h3>{card.title}</h3><p>{card.copy}</p><a href="#archive" aria-label={`View ${card.title}`}>View signal <ArrowRight size={15} /></a></article>)}</div></section>
 
-      <section className="image-band" aria-label="A visual reminder to look for a safe route">
-        <img src="/manus-storage/signal-illustration_9f4d80ac.png" alt="Illustration of a lighthouse beam guiding toward a safe shoreline" />
-        <div className="image-band-copy"><p className="eyebrow"><span className="eyebrow-line" /> SAFE ROUTE / 02° 14′ N</p><p>When something online feels secretive, threatening, or impossible to stop, bring another person into the conversation.</p></div>
-      </section>
+        <section id="archive" className="arc-section archive-section"><div className="archive-intro"><p className="section-kicker"><span /> VIDEO ARCHIVE</p><h2>One frame.<br /><em>Full tide.</em></h2><p>The supplied video is ready to watch in the player above or download directly from the page.</p></div><div className="archive-table">{archiveRows.map(([label, value]) => <div className="archive-row" key={label}><span>{label}</span><strong>{value}</strong></div>)}<a className="arc-button arc-button-outline" href={videoUrl} download="blue-whale-video.mp4"><Download size={16} /> Download Blue Whale</a></div></section>
+      </main>
 
-      <section id="what-to-do" className="editorial-section signals-section">
-        <div className="signals-heading"><p className="eyebrow"><span className="eyebrow-line" /> 02 / THE NEXT SAFE MOVE</p><h2>Read the signals.<br />Make the route wider.</h2><div className="rail-note"><span className="route-marker" /> HANDRAIL NOTE<br /><strong>Keep one trusted person in the loop.</strong></div></div>
-        <div className="signal-list">
-          {signals.map((signal) => <article className="signal-row" key={signal.number}><span className="signal-number">{signal.number}</span><div><h3>{signal.title}</h3><p>{signal.copy}</p></div></article>)}
-        </div>
-      </section>
-
-      <section id="support" className="support-section">
-        <div className="support-mark"><HeartHandshake size={28} /></div>
-        <div><p className="eyebrow"><span className="eyebrow-line" /> 03 / IF THIS IS CLOSE TO HOME</p><h2>You do not have to handle it alone.</h2><p>If you or someone you know is being threatened, pressured, or encouraged to hurt themselves, tell a trusted adult or support professional now. If there is immediate danger, contact local emergency services. Do not forward harmful instructions or accept secrecy as a condition of help.</p></div>
-        <div className="support-actions"><a className="button button-light" href="https://findahelpline.com/" target="_blank" rel="noreferrer">Find a local helpline <ArrowUpRight size={17} /></a><p>Outside the U.S.? Find local crisis support through Find A Helpline.</p></div>
-      </section>
-
-      <footer className="site-footer"><div className="brand-lockup footer-brand"><AppMark /><span><strong>Signal Coast</strong><small>Clarity is a safety tool.</small></span></div><p>This page is educational information, not a substitute for local emergency or professional support.</p><a href="#top">Back to top ↑</a></footer>
-    </main>
+      <footer className="arc-footer"><div className="arc-logo"><span className="arc-logo-mark"><Waves size={20} /></span><span><strong>BLUE WHALE GAME</strong><small>BLUE ARC STUDIO</small></span></div><p>© 2026 Blue Arc Studio. Keep the current moving.</p><a href="#home">Back to top ↑</a></footer>
+    </div>
   );
 }
