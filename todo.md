@@ -1,3 +1,3 @@
-# Intro and single-page implementation checklist
+# Intro fix checklist
 
-The blue curved anime-ocean intro and single-page site are complete. The opening uses the supplied video, includes Skip Intro and an eight-second auto-skip, replays on load/pageshow/visibility/focus, transitions smoothly, and respects reduced motion. The main site includes sticky navigation, hero CTA, three theme cards, archive rows, footer, responsive behavior, and the safe Download Blue Whale video control.
+Removed the sentence “An ocean signal in anime blue.”, removed the red line inside the video frame, removed the bottom red progress line and red wave, and added a poster plus media-ready playback fallback. The screenshot now shows a visible video frame instead of black. The project builds successfully.
