@@ -1,3 +1,3 @@
-# Intro scanline adjustment
+# Intro subtitle adjustment
 
-The red scanline overlay has been removed from the opening anime video. The intro video, skip control, timing, replay behavior, blue curved styling, and all main-site content remain intact. The project was type-checked, built, and visually verified.
+Removed “An ocean signal in anime blue.” from the intro. The title, video, Skip Intro control, scanline-free styling, and replay behavior remain intact. The project was built and visually verified.

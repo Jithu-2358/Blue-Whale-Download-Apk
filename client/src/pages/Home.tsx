@@ -73,7 +73,7 @@ export default function Home() {
     <div className="blue-arc-page">
       <div ref={introRef} key={introKey} className={`intro-screen ${introVisible ? "intro-visible" : "intro-hidden"}`} aria-hidden={!introVisible}>
         <div className="intro-grid" aria-hidden="true" /><div className="intro-moon" aria-hidden="true" /><div className="intro-wave intro-wave-one" aria-hidden="true" /><div className="intro-wave intro-wave-two" aria-hidden="true" />
-        <div className="intro-copy"><p className="intro-kicker"><Sparkles size={14} /> BLUE ARC STUDIO / OPENING</p><h1>Blue<br /><span>Whale</span></h1><p className="intro-subtitle">An ocean signal in anime blue.</p></div>
+        <div className="intro-copy"><p className="intro-kicker"><Sparkles size={14} /> BLUE ARC STUDIO / OPENING</p><h1>Blue<br /><span>Whale</span></h1></div>
         <div className="intro-video-orbit"><video ref={introVideoRef} autoPlay muted playsInline preload="auto" aria-label="Opening Blue Whale video"><source src={videoUrl} type="video/mp4" /></video><div className="intro-scanline" /></div>
         <button className="skip-button" onClick={skipIntro}>Skip Intro <ArrowRight size={15} /></button><div className="intro-progress" aria-hidden="true"><span /></div>
       </div>
